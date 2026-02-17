@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+
+    <style>
+        #gup-main-container { transition: background-color 0.4s ease; scroll-behavior: smooth; background: linear-gradient(135deg, #ffffff 0%, #f5f7ff 100%); }
+        .gup-theme-dark #gup-main-container { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #ffffff; }
+        .gup-theme-light #gup-main-container { background: linear-gradient(135deg, #ffffff 0%, #f5f7ff 100%); color: #1e293b; }
+        .gup-limit { max-width: 1800px !important; margin: 0 auto; width: 92%; }
+
+
+        /* Scroller */
+        .gup-scroller { display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 2rem; padding: 1.5rem 0.5rem; scrollbar-width: none; -ms-overflow-style: none; }
+        .gup-scroller::-webkit-scrollbar { display: none; }
+
+
+        /* Card Component */
+        .gup-card { flex: 0 0 350px; height: 540px; position: relative; background: rgba(255, 255, 255, 0.5); padding: 24px; border-radius: 2.5rem; border: 1.5px solid rgba(99, 102, 241, 0.2); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; box-shadow: 0 8px 32px rgba(99, 102, 241, 0.08); }
+        .gup-theme-light .gup-card { background: rgba(255, 255, 255, 0.8); border: 1.5px solid rgba(99, 102, 241, 0.15); }
+        .gup-theme-dark .gup-card { background: rgba(30, 41, 59, 0.6); border: 1.5px solid rgba(99, 102, 241, 0.3); box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15); }
+        .gup-card:hover { transform: translateY(-12px) scale(1.02); border-color: #6366f1; background: rgba(99, 102, 241, 0.08); box-shadow: 0 20px 50px rgba(99, 102, 241, 0.25); }
+        .gup-card-img { width: 100%; height: 200px; border-radius: 1.5rem; overflow: hidden; margin-bottom: 1.5rem; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .gup-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gup-card:hover .gup-card-img img { transform: scale(1.08); }
+
+        .gup-card-h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; text-align: center; font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .gup-theme-light .gup-card-h3 { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .gup-card-p { font-size: 0.95rem; color: #94a3b8; line-height: 1.6; flex-grow: 1; margin-bottom: 1.5rem; text-align: center; }
+        .gup-theme-light .gup-card-p { color: #475569; }
+
+
+        /* Buttons */
+        .gup-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem 1.5rem; border-radius: 1.25rem; font-weight: 700; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); width: 85%; margin: 0 auto; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: #ffffff !important; border: none; cursor: pointer; text-decoration: none; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3); position: relative; overflow: hidden; }
+        .gup-btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.2); transition: left 0.4s ease; }
+        .gup-btn-primary:hover::before { left: 100%; }
+        .gup-btn-primary:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4); }
+        .gup-nav-arrow { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3); }
+        .gup-nav-arrow:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); }
+
+
+        /* Team Training List Style */
+        .gup-list-item { display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; border-radius: 1.5rem; text-decoration: none; color: inherit; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border: 1.5px solid rgba(99, 102, 241, 0.2); background: rgba(255, 255, 255, 0.5); box-shadow: 0 4px 15px rgba(99, 102, 241, 0.08); }
+        .gup-theme-light .gup-list-item { background: rgba(255, 255, 255, 0.6); border-color: rgba(99, 102, 241, 0.15); }
+        .gup-theme-dark .gup-list-item { background: rgba(30, 41, 59, 0.5); border-color: rgba(99, 102, 241, 0.3); }
+        .gup-list-item:hover { transform: translateY(-6px) translateX(8px); border-color: #6366f1; background: rgba(99, 102, 241, 0.1); box-shadow: 0 15px 35px rgba(99, 102, 241, 0.2); }
+
+
+        /* Modal */
+        #gup-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(16px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .gup-modal { width: 95%; max-width: 550px; padding: 2.5rem; border-radius: 3rem; background: #1e293b; border: 1.5px solid rgba(99, 102, 241, 0.3); box-shadow: 0 25px 50px rgba(99, 102, 241, 0.3); animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .gup-theme-light .gup-modal { background: #ffffff; border-color: rgba(99, 102, 241, 0.2); color: #1e293b; }
+    </style>
+</head>
+<body>
+    <div id="gup-portal-wrapper" class="gup-theme-light">
+
+
+
+    <div id="gup-main-container" class="antialiased min-h-screen relative pb-20">
+        
+        <button onclick="gupToggle()" class="fixed top-6 right-6 z-50 p-3 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 border-2 border-indigo-200 shadow-lg hover:scale-110 transition-all gup-theme-dark:from-indigo-900 gup-theme-dark:to-purple-900 gup-theme-dark:border-indigo-700 hover:shadow-xl">
+            <i id="gup-icon" data-lucide="moon" class="w-6 h-6 text-indigo-600 gup-theme-dark:text-indigo-300"></i>
+        </button>
+
+
+        <section class="border-b border-slate-200 gup-theme-dark:border-slate-800/50 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 gup-theme-dark:from-indigo-900/20 gup-theme-dark:to-purple-900/20">
+            <div class="gup-limit py-12 lg:py-24">
+                <div class="flex flex-col lg:flex-row items-center gap-16 lg:items-stretch">
+                    <div class="flex-1 flex flex-col justify-center text-left">
+                        <h1 class="text-4xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">Unified <span class="from-purple-500 to-pink-500 bg-gradient-to-r bg-clip-text text-transparent">Onboarding</span></h1>
+                        <p class="text-lg md:text-xl mb-10 opacity-75 leading-relaxed max-w-2xl font-medium">Support agents go through this content to learn how to use their core tools, processes, and foundational knowledge to support every product.</p>
+                        <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/v6yjKC4wAuHvmHEn92CHWLeL" target="_blank" class="gup-btn-primary w-fit mx-0 text-lg px-10">
+                            Launch Foundations Path <i data-lucide="arrow-right" class="ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="flex-1 w-full">
+                        <div class="h-full min-h-[400px] rounded-[2.5rem] overflow-hidden border-4 border-indigo-200 shadow-2xl gup-theme-dark:border-indigo-500/30 transform hover:scale-105 transition-transform duration-500">
+                            <img src="https://storage.googleapis.com/exceedlms-uploads-production/uploads/resource_hero_pictures/targets/1275341/w2400/unified-foundations-onboarding-banner-3000-x-720-version-2.png" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="gup-limit mt-16">
+            <p class="text-xl sm:text-2xl font-medium opacity-85 leading-relaxed border-l-4 border-indigo-600 pl-8 py-4 bg-gradient-to-r from-indigo-500/10 via-purple-500/5 to-transparent rounded-r-xl shadow-lg">
+                Agents complete Unified Onboarding, then specific assigned Product training. They'll practice by engaging Case Practice Partner. This simulator provides realistic mock customer interactions that provides real time feedback and training recommendations based on their performance measured by the QA Framework.
+            </p>
+        </div>
+
+
+        <section class="gup-limit mt-12">
+            <div class="p-8 md:p-12 rounded-3xl border-2 border-indigo-200 bg-gradient-to-br from-indigo-50/80 to-purple-50/50 flex flex-col md:flex-row items-center justify-between gap-12 group gup-theme-dark:from-indigo-950/40 gup-theme-dark:to-purple-950/30 gup-theme-dark:border-indigo-500/40 shadow-xl hover:shadow-2xl transition-all duration-500">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 text-indigo-600 font-bold mb-3 uppercase tracking-widest text-[10px] gup-theme-dark:text-indigo-400">
+                        <i data-lucide="gamepad-2" class="w-4 h-4"></i>
+                        <span>Simulation Lab</span>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Case Practice Partner</h2>
+                    <p class="mb-8 text-lg leading-relaxed max-w-xl opacity-80 font-medium">
+                        Step into the shoes of a specialist. Simulate real customer interactions across all products in a safe environment.
+                    </p>
+                    <a href="https://beta-gup-case-practice-partner-v3-232543512937.us-west1.run.app/" target="_blank" class="w-fit bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-2 border-indigo-600 px-8 py-3.5 rounded-xl font-bold hover:from-indigo-700 hover:to-purple-700 transition-all flex items-center gap-2 no-underline shadow-lg hover:shadow-xl hover:scale-105 hover:-translate-y-1">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        Enter Simulation
+                    </a>
+                </div>
+                <div class="hidden md:flex flex-1 justify-end">
+                    <i data-lucide="laptop-2" class="w-48 h-48 text-indigo-500/20 transition-all duration-500 group-hover:text-indigo-500/40 group-hover:scale-110"></i>
+                </div>
+            </div>
+        </section>
+
+
+        <div id="hardware" class="gup-limit mt-24">
+            <div class="flex items-center justify-between px-4 mb-8 pb-6 border-b-2 border-indigo-200 gup-theme-dark:border-indigo-500/30">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-600 gup-theme-dark:from-indigo-500/20 gup-theme-dark:to-purple-500/20 gup-theme-dark:text-indigo-300"><i data-lucide="smartphone" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Hardware</h2>
+                </div>
+                <div class="flex gap-3">
+                    <button class="gup-nav-arrow" onclick="gupSlide('hw-scr', -400)"><i data-lucide="chevron-left"></i></button>
+                    <button class="gup-nav-arrow" onclick="gupSlide('hw-scr', 400)"><i data-lucide="chevron-right"></i></button>
+                </div>
+            </div>
+            <div id="hw-scr" class="gup-scroller">
+                <div class="gup-card">
+                    <div class="gup-card-img"><img src="https://screenshot.googleplex.com/6XirexDQRwePFpS.png"></div>
+                    <h3 class="gup-card-h3">Pixel Phone</h3>
+                    <p class="gup-card-p">Mobile devices & Android integration.</p>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/U2Thvj4dJSnGyCJx65GMbgGJ" target="_blank" class="gup-btn-primary">Start Course</a>
+                </div>
+                <div class="gup-card">
+                    <div class="gup-card-img"><img src="https://screenshot.googleplex.com/7PtT2N5bpK8WEkS.png"></div>
+                    <h3 class="gup-card-h3">Pixel Buds</h3>
+                    <p class="gup-card-p">Select between A-Series or Buds Pro tracks.</p>
+                    <button onclick="gupOpen('buds')" class="gup-btn-primary">Select Path <i data-lucide="layers" class="ml-2 w-4 h-4"></i></button>
+                </div>
+                <div class="gup-card">
+                    <div class="gup-card-img"><img src="https://screenshot.googleplex.com/3r4joesLDijtyKb.png"></div>
+                    <h3 class="gup-card-h3">Pixel Watch</h3>
+                    <p class="gup-card-p">Wearables & health tracking.</p>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/nMHCe6tUuSkKRa99XnFv24oh" target="_blank" class="gup-btn-primary">Start Course</a>
+                </div>
+                <div class="gup-card">
+                    <div class="gup-card-img"><div class="flex items-center justify-center h-full bg-slate-900/50"><i data-lucide="home" class="w-12 h-12 text-indigo-400"></i></div></div>
+                    <h3 class="gup-card-h3">Google Home</h3>
+                    <p class="gup-card-p">Smart home ecosystem & automation.</p>
+                    <button onclick="gupOpen('home')" class="gup-btn-primary">Select Path <i data-lucide="layers" class="ml-2 w-4 h-4"></i></button>
+                </div>
+                <div class="gup-card">
+                    <div class="gup-card-img"><div class="flex items-center justify-center h-full bg-slate-900/50"><i data-lucide="activity" class="w-12 h-12 text-indigo-400"></i></div></div>
+                    <h3 class="gup-card-h3">Fitbit Health</h3>
+                    <p class="gup-card-p">Fitness tracking and family support.</p>
+                    <button onclick="gupOpen('fitbit')" class="gup-btn-primary">Select Path <i data-lucide="layers" class="ml-2 w-4 h-4"></i></button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="gup-limit mt-24">
+            <div class="flex items-center justify-between px-4 mb-8 pb-6 border-b-2 border-indigo-200 gup-theme-dark:border-indigo-500/30">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-600 gup-theme-dark:from-indigo-500/20 gup-theme-dark:to-purple-500/20 gup-theme-dark:text-indigo-300"><i data-lucide="globe" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Platforms & Ecosystems</h2>
+                </div>
+                <div class="flex gap-3">
+                    <button class="gup-nav-arrow" onclick="gupSlide('pl-scr', -400)"><i data-lucide="chevron-left"></i></button>
+                    <button class="gup-nav-arrow" onclick="gupSlide('pl-scr', 400)"><i data-lucide="chevron-right"></i></button>
+                </div>
+            </div>
+            <div id="pl-scr" class="gup-scroller">
+                <div class="gup-card">
+                    <div class="gup-card-img"><img src="https://screenshot.googleplex.com/ABVoc9aRscTgjcK.png"></div>
+                    <h3 class="gup-card-h3">Google Store</h3>
+                    <p class="gup-card-p">Direct sales & order management.</p>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/1vfbem64sieycEcSFSbJkWq4" target="_blank" class="gup-btn-primary">Start Course</a>
+                </div>
+                <div class="gup-card">
+                    <div class="gup-card-img"><img src="https://screenshot.googleplex.com/7mpLRiRi9pM4xSF.png"></div>
+                    <h3 class="gup-card-h3">Google Fi</h3>
+                    <p class="gup-card-p">Mobile network & billing support.</p>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/jC6YGCPwNphfybZ4CnhntFmc" target="_blank" class="gup-btn-primary">Start Course</a>
+                </div>
+                <div class="gup-card">
+                    <div class="gup-card-img"><div class="flex items-center justify-center h-full bg-slate-900/50"><i data-lucide="image" class="w-12 h-12 text-indigo-400"></i></div></div>
+                    <h3 class="gup-card-h3">Google Photos</h3>
+                    <p class="gup-card-p">Cloud storage & memory management.</p>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/TquFp6SEGP2bWQ8TDwVphH9z" target="_blank" class="gup-btn-primary">Start Course</a>
+                </div>
+                <div class="gup-card">
+                    <div class="gup-card-img"><div class="flex items-center justify-center h-full bg-slate-900/50"><i data-lucide="map-pin" class="w-12 h-12 text-indigo-400"></i></div></div>
+                    <h3 class="gup-card-h3">Business Profile</h3>
+                    <p class="gup-card-p">Merchant tools & local search.</p>
+                    <button onclick="gupOpen('business')" class="gup-btn-primary">Select Path <i data-lucide="layers" class="ml-2 w-4 h-4"></i></button>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="gup-limit mt-24">
+            <div class="flex items-center justify-between mb-8 border-b-2 border-indigo-200 gup-theme-dark:border-indigo-500/30 pb-4">
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-4"><i data-lucide="presentation" class="w-10 h-10 text-indigo-600 gup-theme-dark:text-indigo-400"></i> Product 101 Deck Catalog</h2>
+            </div>
+            <div class="p-10 rounded-3xl border-2 border-dashed border-indigo-300 bg-gradient-to-br from-indigo-50/60 to-purple-50/40 flex flex-col items-center justify-center text-center gup-theme-dark:from-indigo-950/20 gup-theme-dark:to-purple-950/10 gup-theme-dark:border-indigo-500/40 shadow-lg hover:shadow-xl transition-all">
+                <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-200 to-purple-200 text-indigo-600 mb-4 shadow-md gup-theme-dark:from-indigo-500/20 gup-theme-dark:to-purple-500/20 gup-theme-dark:text-indigo-300"><i data-lucide="clock" class="w-8 h-8"></i></div>
+                <h3 class="text-2xl font-bold opacity-80">Coming soon</h3>
+                <p class="opacity-60 mt-2 max-w-sm font-medium">Detailed product guides and presentation materials are currently under development.</p>
+            </div>
+        </section>
+
+
+        <section class="gup-limit mt-24 pb-16">
+            <div class="mb-10 border-t-2 border-indigo-200 gup-theme-dark:border-indigo-500/30 pt-16">
+                <h2 class="text-3xl font-bold mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">gUP Team Training</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/G1fVpiVBPWb5Tw5wJUwXNvxi" target="_blank" class="gup-list-item">
+                        <div class="p-3 rounded-xl bg-gradient-to-br from-indigo-200 to-purple-200 text-indigo-600 gup-theme-dark:from-indigo-500/30 gup-theme-dark:to-purple-500/30 gup-theme-dark:text-indigo-300"><i data-lucide="wrench"></i></div>
+                        <span class="font-bold ml-4">Tools Academy</span>
+                    </a>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/fKprmaHyG45xKLDGhoSZYTSU" target="_blank" class="gup-list-item">
+                        <div class="p-3 rounded-xl bg-gradient-to-br from-indigo-200 to-purple-200 text-indigo-600 gup-theme-dark:from-indigo-500/30 gup-theme-dark:to-purple-500/30 gup-theme-dark:text-indigo-300"><i data-lucide="users"></i></div>
+                        <span class="font-bold ml-4">LM Academy</span>
+                    </a>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/fJ7UToArwrFTpiWxcBMgaect" target="_blank" class="gup-list-item">
+                        <div class="p-3 rounded-xl bg-gradient-to-br from-indigo-200 to-purple-200 text-indigo-600 gup-theme-dark:from-indigo-500/30 gup-theme-dark:to-purple-500/30 gup-theme-dark:text-indigo-300"><i data-lucide="clipboard-list"></i></div>
+                        <span class="font-bold ml-4">LPM Academy</span>
+                    </a>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/RP7RuZvu218DFwHHjK6FS32W" target="_blank" class="gup-list-item">
+                        <div class="p-3 rounded-xl bg-gradient-to-br from-indigo-200 to-purple-200 text-indigo-600 gup-theme-dark:from-indigo-500/30 gup-theme-dark:to-purple-500/30 gup-theme-dark:text-indigo-300"><i data-lucide="file-text"></i></div>
+                        <span class="font-bold ml-4">Content Academy</span>
+                    </a>
+                    <a href="https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/E97d1JiYaKsAsmnGDnLaVMot" target="_blank" class="gup-list-item">
+                        <div class="p-3 rounded-xl bg-gradient-to-br from-indigo-200 to-purple-200 text-indigo-600 gup-theme-dark:from-indigo-500/30 gup-theme-dark:to-purple-500/30 gup-theme-dark:text-indigo-300"><i data-lucide="check-square"></i></div>
+                        <span class="font-bold ml-4">VQA Standards</span>
+                    </a>
+                    <a href="https://gcon.exceedlms.com/student/activity/69452-lego-dragon-l10n" target="_blank" class="gup-list-item">
+                        <div class="p-3 rounded-xl bg-gradient-to-br from-indigo-200 to-purple-200 text-indigo-600 gup-theme-dark:from-indigo-500/30 gup-theme-dark:to-purple-500/30 gup-theme-dark:text-indigo-300"><i data-lucide="database"></i></div>
+                        <span class="font-bold ml-4">Lego Dragon</span>
+                    </a>
+                </div>
+            </div>
+            <p class="text-sm opacity-60 italic py-8 text-center font-medium">Questions? Contact gup-ops-ir-LE@google.com.</p>
+        </section>
+
+
+        <div id="gup-overlay">
+            <div id="gup-modal-box" class="gup-modal scale-95 transition-transform duration-300 shadow-2xl">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 id="gup-modal-title" class="text-2xl font-bold">Select Path</h3>
+                    <button onclick="gupClose()" class="p-2 hover:bg-red-500/10 rounded-full text-slate-400 hover:text-red-500 transition-all"><i data-lucide="x" class="w-8 h-8"></i></button>
+                </div>
+                <div id="gup-options" class="space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+    <script>
+        lucide.createIcons();
+        function gupSlide(id, amt) { document.getElementById(id).scrollBy({ left: amt, behavior: 'smooth' }); }
+
+
+        const gupData = {
+            buds: { title: "Pixel Buds Selection", paths: [{ name: "Buds A-Series Onboarding", link: "https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/qudNAtrnLg6ZBetsRLT3i5Nf" }, { name: "Buds Pro Onboarding", link: "https://gcon.exceedlms.com/student/enrollments/create_enrollment_from_token/RwUWc2c4Gy26ozFdrJcWmcQt" }] },
+            fitbit: { title: "Fitbit Selection", paths: [{ name: "Fitbit Technical Path", link: "#" }, { name: "Fitness Path", link: "#" }] },
+            home: { title: "Google Home Selection", paths: [{ name: "Nest Path", link: "#" }, { name: "Home Path", link: "#" }] },
+            business: { title: "Business Profile Selection", paths: [{ name: "Local Search", link: "#" }, { name: "Merchant Tools", link: "#" }] }
+        };
+
+
+        function gupOpen(type) {
+            const d = gupData[type];
+            document.getElementById('gup-modal-title').innerText = d.title;
+            const container = document.getElementById('gup-options');
+            container.innerHTML = '';
+            d.paths.forEach(p => {
+                const a = document.createElement('a');
+                a.href = p.link; a.target = "_blank";
+                a.className = "flex justify-between p-5 rounded-2xl border border-indigo-500/30 bg-indigo-500/5 font-bold no-underline hover:bg-indigo-600 hover:text-white transition-all";
+                a.innerHTML = `<span>${p.name}</span> <i data-lucide="arrow-right-circle"></i>`;
+                container.appendChild(a);
+            });
+            document.getElementById('gup-overlay').style.display = 'flex';
+            lucide.createIcons();
+        }
+
+
+        function gupClose() { document.getElementById('gup-overlay').style.display = 'none'; }
+        
+        function gupToggle() {
+            const w = document.getElementById('gup-portal-wrapper');
+            const icon = document.getElementById('gup-icon');
+            if (w.classList.contains('gup-theme-light')) {
+                w.classList.replace('gup-theme-light', 'gup-theme-dark');
+                icon.setAttribute('data-lucide', 'sun');
+            } else {
+                w.classList.replace('gup-theme-dark', 'gup-theme-light');
+                icon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
